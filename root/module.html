@@ -1,5 +1,6 @@
 <% twitter_card_inc = 'inc/twitter/module.html' %>
 <% title = module.documentation _ (module.abstract ? ' - ' _ module.abstract : ''); rss = 'distribution/' _ module.distribution %>
+<% metadesc = title %>
 <strong>
   <big>
     <a rel="author" href="/author/<% release.author %>" title="<% author.asciiname || release.author %>">

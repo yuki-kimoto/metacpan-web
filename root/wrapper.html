@@ -22,6 +22,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+  <% IF metadesc %><meta name="description" value="<% metadesc | html %>"/><% END %>
   <title><% IF title; title; ELSE; 'Search the CPAN'; END %> - metacpan.org</title>
   <%- IF rss %><link rel="alternate" type="application/rss+xml" title="RSS" href="http://metacpan.org/feed/<% rss %>" /><% END %>
   <link href="<% req.env.item('psgix.assets').1 %>" rel="stylesheet" type="text/css">
