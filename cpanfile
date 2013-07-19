@@ -1,4 +1,4 @@
-requires 'AnyEvent::Curl::Multi';
+recommends 'AnyEvent::Curl::Multi';
 requires 'App::Prove';
 requires 'CPAN::Meta::Requirements';
 requires 'Captcha::reCAPTCHA', '0.94';
@@ -33,6 +33,7 @@ requires 'HTML::Tree';
 requires 'HTTP::Message::PSGI';
 requires 'HTTP::Request';
 requires 'HTTP::Request::Common';
+requires 'HTTP::Tiny';
 requires 'Hash::AsObject';
 requires 'Hash::Merge';
 requires 'JSON';

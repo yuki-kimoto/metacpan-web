@@ -8,7 +8,8 @@ has [qw(api api_secure)] => ( is => 'ro' );
 use Encode ();
 use JSON;
 use HTTP::Request ();
-use AnyEvent::Curl::Multi;
+use AnyEvent;
+use HTTP::Response;
 use Try::Tiny 0.09;
 use MooseX::ClassAttribute;
 use namespace::autoclean;
@@ -16,7 +17,15 @@ use namespace::autoclean;
 class_has client => ( is => 'ro', lazy_build => 1 );
 
 sub _build_client {
-    return AnyEvent::Curl::Multi->new( max_concurrency => 5 );
+    my $client;
+    eval {
+        require AnyEvent::Curl::Multi;
+        $client = AnyEvent::Curl::Multi->new( max_concurrency => 5 );
+    } or do {
+        warn "Install AnyEvent::Curl::Multi for better performance, falling back to HTTP::Tiny";
+        $client = MetaCPAN::Web::Model::API::HTTP::Win32->new;
+    };
+    return $client;
 }
 
 {
@@ -115,6 +124,33 @@ sub raw_api_response {
     };
 
     return +{ raw => $data };
+}
+
+package MetaCPAN::Web::Model::API::HTTP::Win32::Handle;
+use Moose;
+
+has cv => ( is => "ro" );
+
+__PACKAGE__->meta->make_immutable;
+
+package MetaCPAN::Web::Model::API::HTTP::Win32;
+use Moose;
+use AE;
+use HTTP::Tiny;
+
+sub request {
+    my ($self, $req) = @_;
+    my $cv = AE::cv;
+    my $res = HTTP::Tiny->new->request($req->method, $req->uri, { headers => $req->headers, content => $req->content });
+    warn $res->{content};
+    $cv->send(
+        HTTP::Response->new(
+            $res->{status},
+            $res->{reason},
+            HTTP::Headers->new(%{$res->{headers}}),
+            $res->{content}
+    ));
+    return MetaCPAN::Web::Model::API::HTTP::Win32::Handle->new( cv => $cv );
 }
 
 1;
