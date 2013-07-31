@@ -70,7 +70,7 @@ requires 'Test::XPath', '0.15';
 requires 'Try::Tiny', '0.09';
 requires 'URI';
 requires 'XML::Feed';
-requires 'common::sense', '< 3.71';
+requires 'http://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/common-sense-3.6.tar.gz';
 requires 'mro';
 requires 'namespace::autoclean';
 requires 'overload';
