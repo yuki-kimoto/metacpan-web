@@ -1,3 +1,4 @@
+requires 'http://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/common-sense-3.6.tar.gz';
 requires 'AnyEvent::Curl::Multi';
 requires 'App::Prove';
 requires 'CPAN::Changes', '0.21';
@@ -70,7 +71,6 @@ requires 'Test::XPath', '0.15';
 requires 'Try::Tiny', '0.09';
 requires 'URI';
 requires 'XML::Feed';
-requires 'http://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/common-sense-3.6.tar.gz';
 requires 'mro';
 requires 'namespace::autoclean';
 requires 'overload';
