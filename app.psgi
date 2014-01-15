@@ -20,6 +20,7 @@ use Plack::App::File;
 use Plack::App::URLMap;
 use Plack::Middleware::Assets;
 use Plack::Middleware::Runtime;
+use Plack::Middleware::MCLess;
 use Plack::Middleware::ReverseProxy;
 use Plack::Middleware::Session::Cookie;
 use Plack::Middleware::ServerStatus::Lite;
@@ -75,6 +76,26 @@ $app = Plack::Middleware::Assets->wrap(
             toolbar
             github
             contributors
+            )
+    ],
+);
+
+use CHI;
+my $cache = CHI->new(
+    driver     => 'FastMmap',
+    root_dir   => '/tmp/',
+    cache_size => '100k'
+);
+
+# Wrap up static to serve lessc parsed files
+$app = Plack::Middleware::MCLess->wrap($app,
+    cache => $cache,
+    cache_ttl => '1 second',
+    root => "root/static",
+    files => [
+                map {"root/static/less/$_.less"}
+            qw(
+            style
             )
     ],
 );
