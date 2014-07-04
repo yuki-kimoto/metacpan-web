@@ -1,0 +1,6 @@
+severity = 1
+verbose = 11
+
+[-ControlStructures::ProhibitPostfixControls]
+[-Modules::RequireVersionVar]
+[-Variables::ProhibitPunctuationVars]
