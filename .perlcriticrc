@@ -1,6 +1,8 @@
-severity = 1
+severity = 5
 verbose = 11
 
 [-ControlStructures::ProhibitPostfixControls]
+[-Documentation::RequirePodLinksIncludeText]
+[-Documentation::RequirePodSections]
 [-Modules::RequireVersionVar]
 [-Variables::ProhibitPunctuationVars]
