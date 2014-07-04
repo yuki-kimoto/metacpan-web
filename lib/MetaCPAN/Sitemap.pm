@@ -81,7 +81,7 @@ sub process {
 
     # Open the output file, get ready to pump out the XML.
 
-    openmy $fh, '>:gzip', $self->xml_file;
+    open my $fh, '>:gzip', $self->xml_file;
 
     my @urls;
     my $metacpan_url = q{};
