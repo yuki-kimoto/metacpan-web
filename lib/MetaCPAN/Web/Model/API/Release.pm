@@ -113,6 +113,30 @@ sub all_by_author {
     );
 }
 
+sub all_by_distribution {
+    my ( $self, $distribution, $size, $page ) = @_;
+
+    $page = $page > 0 ? $page : 1;
+
+    return $self->request(
+        '/release/_search',
+        {
+            query => {
+                filtered => {
+                    query  => { match_all => {} },
+                    filter => {
+                        term => { distribution => $distribution }
+                    },
+                }
+            },
+            sort => [ { date => 'desc' } ],
+            fields => [qw(author distribution name status abstract date)],
+            size   => $size,
+            from   => ( $page - 1 ) * $size,
+        }
+    );
+}
+
 sub recent {
     my ( $self, $page, $page_size, $type ) = @_;
     my $query;

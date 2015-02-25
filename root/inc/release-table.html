@@ -12,7 +12,14 @@
   <%- FOREACH release IN releases %>
     <tr>
       <td class="name"><strong><a href="/release/<% IF release.status == 'latest'; release.distribution; ELSE; release.author; '/'; release.name; END %>" class="ellipsis" title="<% release.author; '/'; release.name %>"><% release.name %></a></strong></td>
-      <td class="abstract"><% IF release.abstract; release.abstract; END %></td>
+      <td class="abstract">
+        <% IF release.abstract; release.abstract; END %>
+      </td>
+      <td>
+        <% IF release.before %>
+          <a href="/diff/file?target=<% release.author %>/<% release.name %>/&source=<% release.before.author %>/<% release.before.name %>">diff</a>
+        <% END %>
+      </td>
       <td class="date relatize" sort="<% release.date.dt_http %>"><% release.date.dt_http %></td>
     </tr>
   <% END %>
